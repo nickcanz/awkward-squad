@@ -2,13 +2,15 @@
 
 ###21 Sept 2011
 
-Moderator: Ben
+Moderator: Ben Karel
+
 Notetaker: Nick Canzoneri
 
 ##Opening discussion up with questions about the paper
 
-Q: why use monads when you can use Haskell for pure functional stuff and interface for other stuff
-Sub-question: Difficulty of interfacing?
+Q: Why use monads when you can use Haskell for pure functional stuff and interface for other stuff
+
+Sub question: Difficulty of interfacing?
 
 A: Still not that hard to write imperative code and foreign function interface (FFI) is still monadic
 
@@ -19,13 +21,16 @@ Imperative programming in Haskell: actions are first class values. Building acti
 The programmer can use actions to make it easier to constrain scope of side effects. For example,  writing compiler - transform one thing to another, need to choose fresh names without reuse, choosing that name is a side effect.
 
 Q: Difference between action and a first class function (like in Scala or other language)?
+
 A: Action is a particular typed function - returns a value in a monad
 
 You can tell a lot about the program from the types, even monadic types. IOMonad and STM Monad provides information to the programmer. (STM == software transactional memory)
 
 Could (probably) write monads in any language. Haskell gives you permanence so you can't cheat when writing monadic code and also the primitives to make it easier, such as with IO.
 
->>= is pronounced bind
+```haskell
+>>= --is pronounced bind
+```
 
 The do notation is much easier to read, but just uses bind under the scenes. That is why in Haskell, opposed to other languages, it's easer to accomplish monadic tasks. Other languages would have to use straight up bind or the user would have to re-implement the do notation again.
 
@@ -46,6 +51,7 @@ return 'c' :: (Monad m) => m Char
 ```
 
 Q: Interfacing Haskell with impure program?
+
 A: One of first examples, with Haskell calling C wrapper to read files. The naive implementation uses a request/response model when calling out to the C wrapper. Calling it, with lazy language, those calls to the C wrapper can came back out of order. That's why monads were invented.
 
 Bind  (>>=) - Guarantees machine state happens in the order you expect
@@ -142,7 +148,7 @@ Maybe a is either value nothing or value a
     \i1 -> maybeGetInt >>=
       \i2 -> return (i1, i2)
 
-  --using explicit bind function and code reformatted not in a Haskell style
+  --using explicit bind function and code reformatted
   maybeGetInt :: Maybe Int
   getTwoInts :: Maybe (Int, Int)
   getTwoInts = 
